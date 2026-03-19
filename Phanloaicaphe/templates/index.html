@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Phân loại quả cà phê</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #1f4037, #99f2c8);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 420px;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #1f4037;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .upload-box {
+            border: 2px dashed #1f4037;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            color: #1f4037;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button {
+            background: #1f4037;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #145c46;
+        }
+
+        .result {
+            margin-top: 25px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .ripe {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .unripe {
+            background: #27ae60;
+            color: white;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 18px;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 1.2s ease;
+        }
+
+        .progress-ripe {
+            background: linear-gradient(90deg, #ff7675, #e74c3c);
+        }
+
+        .progress-unripe {
+            background: linear-gradient(90deg, #55efc4, #27ae60);
+        }
+
+        .confidence-text {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        img {
+            margin-top: 15px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>☕ Phân loại quả cà phê</h1>
+    <div class="subtitle">Ứng dụng AI – CNN MobileNetV2</div>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="upload-box">
+            <label class="upload-label">
+                📸 Chọn ảnh quả cà phê
+                <input type="file" name="image" required>
+            </label>
+        </div>
+        <button type="submit">🔍 Phân loại</button>
+    </form>
+
+    {% if result %}
+    <div class="result">
+
+        {% if "Chín" in result %}
+            <div class="badge ripe">🍒 {{ result }}</div>
+            <div class="progress-container">
+                <div class="progress-bar progress-ripe"
+                     style="width: {{ confidence }}%;"></div>
+            </div>
+        {% else %}
+            <div class="badge unripe">🌱 {{ result }}</div>
+            <div class="progress-container">
+                <div class="progress-bar progress-unripe"
+                     style="width: {{ confidence }}%;"></div>
+            </div>
+        {% endif %}
+
+        <div class="confidence-text">
+            Độ tin cậy: <b>{{ confidence }}%</b>
+        </div>
+
+        <img src="{{ img_path }}">
+    </div>
+    {% endif %}
+
+    <footer>
+        © Đồ án Trí tuệ nhân tạo – Phân loại ảnh
+    </footer>
+</div>
+
+</body>
+</html>
