@@ -55,4 +55,3 @@ image
 - → Thực hiện:
 - Upload ảnh
 - Nhận kết quả phân loại (Cà phê chín / cà phê xanh)
-- Xem lịch sử
